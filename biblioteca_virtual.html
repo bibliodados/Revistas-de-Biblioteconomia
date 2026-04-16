@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portal Acadêmico de Revistas de Biblioteconomia e Ciência da Informação com Monitoramento 24h.">
+    <title>📚 Radar Biblioteconomia: Portal Dinâmico</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-navy: #0f1c2e;
+            --secondary-gold: #b38b4d;
+            --bg-paper: #f4f1ea;
+            --text-dark: #1e272e;
+            --text-muted: #57606f;
+            --border-color: #ced4da;
+            --white: #ffffff;
+            --accent-red: #d63031;
+            --success-green: #27ae60;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-paper);
+            color: var(--text-dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Header Premium */
+        .top-header {
+            background-color: var(--primary-navy);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-gold);
+            position: relative;
+        }
+
+        .top-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .top-header p {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary-gold);
+            font-weight: 600;
+        }
+
+        /* Radar de Pesquisa - Dinâmico */
+        .radar-section {
+            margin-top: -3rem;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .radar-header {
+            background: var(--accent-red);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(214, 48, 49, 0.3);
+        }
+
+        .radar-title { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; }
+        .radar-pulse {
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .radar-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-height: 200px;
+        }
+
+        .radar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            border-left: 4px solid var(--accent-red);
+            padding: 1.5rem;
+            background: #fffcfc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .article-card:hover { transform: translateX(5px); }
+        .article-card h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .article-meta { font-size: 0.8rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 1rem; }
+        .article-tag { color: var(--accent-red); font-weight: 700; text-transform: uppercase; }
+
+        /* Catálogo Geral */
+        .catalog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-gold);
+        }
+
+        .search-wrapper { position: relative; width: 400px; }
+        .search-wrapper input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            outline: none;
+        }
+        .search-wrapper i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+
+        .journal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .journal-card {
+            background: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .journal-card:hover { border-color: var(--secondary-gold); background: #fffdf9; }
+
+        .journal-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            object-fit: contain;
+            background: white;
+            padding: 2px;
+            border: 1px solid #eee;
+        }
+
+        .journal-info {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .journal-name-link {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+        }
+
+        .journal-name-link:hover {
+            color: var(--secondary-gold);
+            border-bottom-color: var(--secondary-gold);
+        }
+
+        .journal-meta-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .qualis-mini {
+            font-weight: 800;
+            color: var(--accent-red);
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+
+        /* Skeletons */
+        .skeleton { background: #eee; height: 100px; border-radius: 4px; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* Footer */
+        footer { background: var(--primary-navy); color: white; padding: 4rem 0; text-align: center; margin-top: 5rem; }
+
+        /* Mensagem de Erro */
+        .error-msg { text-align: center; color: var(--text-muted); padding: 3rem; }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="container">
+            <p>Ecossistema Acadêmico</p>
+            <h1>Radar de Biblioteconomia</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Radar de Pesquisa (24h) -->
+        <section class="radar-section">
+            <div class="radar-header">
+                <div class="radar-title">
+                    <div class="radar-pulse"></div>
+                    Radar de Pesquisa: Publicações dos últimos 7 dias
+                </div>
+                <div id="radarCount">Buscando atualizações...</div>
+            </div>
+            <div class="radar-content" id="radarContent">
+                <div class="radar-grid" id="radarGrid">
+                    <!-- Skeletons enquanto carrega -->
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catálogo Expandido -->
+        <section class="catalog-section">
+            <div class="catalog-header">
+                <h2 style="font-family: 'Playfair Display'; font-size: 2rem;">Catálogo Geral de Revistas</h2>
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar no catálogo...">
+                </div>
+            </div>
+
+            <div class="journal-grid" id="journalGrid">
+                <!-- Gerado via JS -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Projeto orientado pelo conselho de agentes: Dra. Lúcia, Prof. Marcos, Sofia e Enzo.</p>
+            <p style="opacity: 0.5; margin-top: 1rem; font-size: 0.8rem;">Monitoramento via Feeds RSS e OJS Gateway.</p>
+        </div>
+    </footer>
+
+    <script>
+        const journals = [
+            { title: "Perspectivas em Ciência da Informação", issn: "1981-5344", inst: "UFMG", url: "https://periodicos.ufmg.br/index.php/pci", qualis: "A1" },
+            { title: "Ciência da Informação", issn: "1518-8353", inst: "IBICT", url: "https://www.scielo.br/j/ci/", qualis: "A2" },
+            { title: "Transinformação", issn: "2318-0889", inst: "PUC-Campinas", url: "https://periodicos.puc-campinas.edu.br/transinfo", qualis: "A1" },
+            { title: "Informação & Sociedade: Estudos", issn: "1809-4783", inst: "UFPB", url: "https://periodicos.ufpb.br/ojs2/index.php/ies", qualis: "A1" },
+            { title: "Encontros Bibli (UFSC)", issn: "1518-2924", inst: "UFSC", url: "https://periodicos.ufsc.br/index.php/eb", qualis: "A1" },
+            { title: "Revista Brasileira de Biblioteconomia e Documentação (RBBD)", issn: "1980-6949", inst: "FEBAB", url: "https://rbbd.febab.org.br/", qualis: "A2" },
+            { title: "RDBCI: Revista Digital de Biblioteconomia e CI", issn: "1678-765X", inst: "UNICAMP", url: "https://periodicos.sbu.unicamp.br/ojs/index.php/rdbci", qualis: "A2" },
+            { title: "Informação & Informação", issn: "1981-8920", inst: "UEL", url: "https://ojs.uel.br/revistas/uel/index.php/informacao", qualis: "A2" },
+            { title: "Biblionline", issn: "1809-4775", inst: "UFPB", url: "https://periodicos.ufpb.br/ojs/index.php/biblio", qualis: "B1" },
+            { title: "Revista Bibliomar", issn: "2526-6160", inst: "UFMA", url: "https://periodicoseletronicos.ufma.br/index.php/bibliomar", qualis: "B2" },
+            { title: "Revista ACB", issn: "1414-0594", inst: "ACB", url: "https://revista.acbsc.org.br/", qualis: "B1" },
+            { title: "AtoZ: novas práticas em informação e conhecimento", issn: "2237-4558", inst: "UFPR", url: "https://revistas.ufpr.br/atoz", qualis: "B1" },
+            { title: "Pesquisa Brasileira em Ciência da Informação e Biblioteconomia (PBCIB)", issn: "1981-0199", inst: "UFPB", url: "https://periodicos.ufpb.br/index.php/pbcib", qualis: "Histórica" },
+            { title: "Em Questão", issn: "1808-5245", inst: "UFRGS", url: "https://seer.ufrgs.br/EmQuestao", qualis: "A2" },
+            { title: "Revista Ibero-Americana de Ciência da Informação (RICI)", issn: "1983-5248", inst: "UnB", url: "https://periodicos.unb.br/index.php/RICI", qualis: "A2" },
+            { title: "Ponto de Acesso", issn: "1981-6766", inst: "UFBA", url: "https://periodicos.ufba.br/index.php/revistaici", qualis: "B1" },
+            { title: "Informação em Pauta", issn: "2525-3468", inst: "UFC", url: "https://periodicos.ufc.br/informacaoempauta", qualis: "B1" },
+            { title: "Tendências da Pesquisa Brasileira em Ciência da Informação (ANCIB)", issn: "1983-5116", inst: "ANCIB", url: "https://revistas.ancib.org/tpbci", qualis: "B1" },
+            { title: "Múltiplos Olhares em Ciência da Informação", issn: "2176-1779", inst: "UFMG", url: "https://periodicos.ufmg.br/index.php/moci", qualis: "B2" },
+            { title: "Liinc em Revista", issn: "1808-3536", inst: "IBICT", url: "https://revista.ibict.br/liinc", qualis: "A1" },
+            { title: "Brazilian Journal of Information Science (BRAJIS / BJIS)", issn: "1981-1640", inst: "UNESP", url: "https://www2.marilia.unesp.br/revistas/index.php/bjis", qualis: "B1" }
+        ];
+
+        // Lógica de Renderização do Catálogo (Formato Compacto solicitado)
+        function renderCatalog(data) {
+            const grid = document.getElementById('journalGrid');
+            grid.innerHTML = data.map(j => {
+                let domain = "";
+                try {
+                    domain = new URL(j.url).hostname;
+                } catch(e) { domain = "link"; }
+                
+                const logoUrl = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+                
+                return `
+                    <div class="journal-card">
+                        <img src="${logoUrl}" class="journal-logo" alt="logo" onerror="this.src='https://ui-avatars.com/api/?name=${j.title}&size=32'">
+                        <div class="journal-info">
+                            <a href="${j.url}" target="_blank" class="journal-name-link">${j.title}</a>
+                            <span class="journal-meta-text"> - ISSN ${j.issn} - Instituição ${j.inst}</span>
+                        </div>
+                        <span class="qualis-mini">${j.qualis}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Lógica de Raspagem RSS (Simulada/Proxy)
+        async function fetchRadar() {
+            const radarGrid = document.getElementById('radarGrid');
+            const radarCount = document.getElementById('radarCount');
+            const PROXY = "https://api.rss2json.com/v1/api.json?rss_url=";
+            
+            // Lista expandida de monitoramento (Prof. Marcos mapeou mais fontes)
+            const radarFeeds = [
+                { title: "PCI (UFMG)", rss: "https://periodicos.ufmg.br/index.php/pci/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "I&S (UFPB)", rss: "https://periodicos.ufpb.br/ojs2/index.php/ies/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "Encontros Bibli (UFSC)", rss: "https://periodicos.ufsc.br/index.php/eb/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "Transinformação", rss: "https://periodicos.puc-campinas.edu.br/transinfo/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "Ciência da Informação (IBICT)", rss: "https://revista.ibict.br/ciinf/gateway/plugin/WebFeedPlugin/atom" },
+                { title: "RDBCI (Unicamp)", rss: "https://periodicos.sbu.unicamp.br/ojs/index.php/rdbci/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "Em Questão (UFRGS)", rss: "https://seer.ufrgs.br/EmQuestao/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "RICI (UnB)", rss: "https://periodicos.unb.br/index.php/RICI/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "Biblionline", rss: "https://periodicos.ufpb.br/ojs/index.php/biblio/gateway/plugin/WebFeedGatewayPlugin/rss2" },
+                { title: "Inf. em Pauta", rss: "https://periodicos.ufc.br/informacaoempauta/gateway/plugin/WebFeedGatewayPlugin/rss2" }
+            ];
+            
+            let allArticles = [];
+
+            for (const journal of radarFeeds) {
+                try {
+                    const response = await fetch(`${PROXY}${encodeURIComponent(journal.rss)}`);
+                    const data = await response.json();
+                    
+                    if (data.status === 'ok') {
+                        const news = data.items.map(item => ({
+                            title: item.title,
+                            link: item.link,
+                            date: new Date(item.pubDate),
+                            journal: journal.title,
+                            author: item.author || "Equipe Editorial"
+                        }));
+                        allArticles = [...allArticles, ...news];
+                    }
+                } catch (e) { console.warn(`Falha no feed de ${journal.title}`); }
+            }
+
+            const today = new Date();
+            const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
+            
+            // Ordenar por data (mais recentes primeiro)
+            allArticles.sort((a, b) => b.date - a.date);
+
+            let displayArticles = allArticles.filter(a => (today - a.date) < sevenDaysInMs);
+            let isFallback = false;
+
+            // Se não houver nada em 7 dias, mostra as 6 mais recentes registradas (fallback)
+            if (displayArticles.length === 0 && allArticles.length > 0) {
+                displayArticles = allArticles.slice(0, 6);
+                isFallback = true;
+            }
+
+            if (displayArticles.length === 0) {
+                radarGrid.innerHTML = `<div class="error-msg" style="padding:1rem;">Buscando novas edições... (Revistas acadêmicas publicam mensalmente ou trimestralmente).</div>`;
+                radarCount.innerText = "Standby";
+            } else {
+                radarCount.innerHTML = isFallback 
+                    ? `<span style="color:#eee">Últimos Lançamentos (Geral)</span>`
+                    : `${displayArticles.length} artigos nos últimos 7 dias`;
+                
+                radarGrid.innerHTML = displayArticles.map(art => `
+                    <div class="article-card" style="padding:0.75rem; ${isFallback ? 'border-left-color: var(--secondary-gold);' : ''}">
+                        <span class="article-tag" style="font-size:0.7rem; ${isFallback ? 'color: var(--secondary-gold);' : ''}">${art.journal}</span>
+                        <h4 style="font-size:0.9rem; margin:0.25rem 0;">${art.title}</h4>
+                        <div style="font-size:0.7rem; color:var(--text-muted); margin-bottom:0.5rem;">
+                            ${art.date.toLocaleDateString('pt-BR')} • ${art.author.substring(0, 30)}...
+                        </div>
+                        <a href="${art.link}" target="_blank" style="font-size:0.75rem; color:var(--accent-red); text-decoration:none; font-weight:700;">Acessar Artigo &raquo;</a>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Busca
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = journals.filter(j => j.title.toLowerCase().includes(term) || j.issn.includes(term));
+            renderCatalog(filtered);
+        });
+
+        // Init
+        renderCatalog(journals);
+        fetchRadar();
+    </script>
+</body>
+</html>
